@@ -1,5 +1,5 @@
 import time
-
+import datetime
 
 main_menu = ("1. Создать класс Список\n ",
              "2. Создать класс Светофор\n ",
@@ -128,38 +128,35 @@ def task3():
 
 
 class MyClass:
+    china_calendar = {0: "обезьяна", 1: "петух", 2: "собака", 3: "свинья", 4: "крыса", 5: "бык", 6: "тигр",
+                      7: "кот", 8: "дракон", 9: "змея", 10: "лошадь", 11: "коза"}
 
-    def __init__(self, name, state=None):
-        if state is not None:
-            self.is_turned_on = state
-            self.name = name
-        else:
-            self.is_turned_on = False
-            self.name = name
-
-    def turn_on_device(self):
-        self.is_turned_on = True
+    def __init__(self, name, china_year_symbol):
+        self.name = name
+        self.china_year_symbol = china_year_symbol
 
     def print_info(self):
-        print("Устройство", self.name, self.is_turned_on)
+        print(self.name, "-", self.china_year_symbol)
 
     @classmethod
-    def turn_off_all_devices(cls):
-        cls.is_turned_on = False
+    def format_from_birth_year(cls, name, years_old):
+        return cls(name, cls.china_calendar[(datetime.date.today().year - years_old) % 12])
 
     @staticmethod
-    def stat():
-        print("hello")
+    def is_man_year(china_year):
+        if MyClass.china_calendar[datetime.date.today().year % 12] == china_year:
+            print("Это его год!")
 
 
 def task4():
     # Придумать класс самостоятельно, реализовать в нем методы экземпляра
     # класса, статические, методы, методы класса.
-    lamp = MyClass("lampa", True)
-    phone = MyClass("phone")
-    MyClass.turn_off_all_devices()
-    lamp.print_info()
-    phone.print_info()
+    man_1 = MyClass("Leo", "коза")
+    man_2 = MyClass.format_from_birth_year("Nik", 24)
+    man_1.print_info()
+    MyClass.is_man_year(man_1.china_year_symbol)
+    man_2.print_info()
+    MyClass.is_man_year(man_2.china_year_symbol)
 
 
 def menu():
